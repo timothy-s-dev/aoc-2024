@@ -5,8 +5,8 @@ def run(input_file, part):
         if part == 1:
             result += abs(column1[i] - column2[i])
         else:
-            occurences = column2.count(column1[i])
-            result += column1[i] * occurences
+            occurrences = column2.count(column1[i])
+            result += column1[i] * occurrences
     print(result)
 
 
