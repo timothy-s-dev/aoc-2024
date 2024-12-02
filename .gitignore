@@ -1,6 +1,10 @@
 # IDE Files
 .idea
 
+# Input Files
+inputs/day*.txt
+!inputs/day*-test.txt
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
