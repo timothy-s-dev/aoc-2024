@@ -3,6 +3,7 @@ from textual.app import App, ComposeResult
 from textual.containers import Horizontal, HorizontalGroup, VerticalGroup, Center
 from textual.widgets import Button, Footer, Header, ProgressBar, RichLog
 import argparse
+import pyperclip
 
 
 parser = argparse.ArgumentParser(
