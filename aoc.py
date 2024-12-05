@@ -24,6 +24,9 @@ file = None
 
 class AoCApp(App):
     CSS = """
+    .top_margin_1 {
+        margin-top: 1;
+    }
     #main_progress_bar {
         margin-top: 1;
     }
