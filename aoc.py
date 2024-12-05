@@ -27,6 +27,9 @@ class AoCApp(App):
     .top_margin_1 {
         margin-top: 1;
     }
+    .width_auto { 
+        width: auto;
+    }
     #main_progress_bar {
         margin-top: 1;
     }
