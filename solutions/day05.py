@@ -31,6 +31,9 @@ class Day05(BaseSolution):
         if event.button.id == "copy":
             pyperclip.copy(self.digits.value)
 
+    def on_checkbox_changed(self, event: Checkbox.Changed):
+        self.fast_forward = event.checkbox.value
+
     @work(exclusive=True, thread=True)
     async def run(self, input_file, part):
         unique_pages = set()
