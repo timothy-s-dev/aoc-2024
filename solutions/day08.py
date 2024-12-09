@@ -71,13 +71,8 @@ class Day08(BaseSolution):
             y += 1
         height = y
 
-        self.rich_log.write(antennas)
-
         antenna_pairs = list(map(lambda a: (a, list(combinations(antennas[a], 2))), antennas.keys()))
-        total_antenna_pairs = sum(len(x) for x in antenna_pairs)
-
-        for pair in antenna_pairs:
-            self.rich_log.write(f"{pair[0]}: {pair[1]}")
+        total_antenna_pairs = sum(len(x[1]) for x in antenna_pairs)
 
         self.progress.update(total=total_antenna_pairs, progress=0)
         antinodes = []
@@ -85,17 +80,29 @@ class Day08(BaseSolution):
             for antenna_pair in antenna_pairs_set[1]:
                 x_offset = antenna_pair[0][0] - antenna_pair[1][0]
                 y_offset = antenna_pair[0][1] - antenna_pair[1][1]
-                first_position = (antenna_pair[0][0] + x_offset, antenna_pair[0][1] + y_offset)
-                second_position = (antenna_pair[1][0] - x_offset, antenna_pair[1][1] - y_offset)
 
                 added_antinode = False
-                if inside_rect(first_position, width, height):
+                if part == 1:
+                    first_position = (antenna_pair[0][0] + x_offset, antenna_pair[0][1] + y_offset)
+                    second_position = (antenna_pair[1][0] - x_offset, antenna_pair[1][1] - y_offset)
+                    if inside_rect(first_position, width, height):
+                        added_antinode = True
+                        antinodes.append(first_position)
+                    if inside_rect(second_position, width, height):
+                        added_antinode = True
+                        antinodes.append(second_position)
+                else:
                     added_antinode = True
-                    antinodes.append(first_position)
-                if inside_rect(second_position, width, height):
-                    added_antinode = True
-                    antinodes.append(second_position)
-
+                    antinodes.append((antenna_pair[0][0], antenna_pair[0][1]))
+                    positive = (antenna_pair[0][0] + x_offset, antenna_pair[0][1] + y_offset)
+                    while inside_rect(positive, width, height):
+                        antinodes.append(positive)
+                        positive = (positive[0] + x_offset, positive[1] + y_offset)
+                    negative = (antenna_pair[0][0] - x_offset, antenna_pair[0][1] - y_offset)
+                    while inside_rect(negative, width, height):
+                        antinodes.append(negative)
+                        negative = (negative[0] - x_offset, negative[1] - y_offset)
+                
                 if added_antinode:
                     self.digits.update(str(len(list(set(antinodes)))))
                     self.update_grid_display(width, height, antinodes, antenna_reverse_lookup)
@@ -103,7 +110,6 @@ class Day08(BaseSolution):
                         time.sleep(0.05)
                 self.progress.advance(1)
 
-        self.rich_log.write(f"Antinodes: {antinodes}")
         self.rich_log.write(
             f"[bold green]Done, Result:[/bold green] {len(list(set(antinodes)))}"
         )
