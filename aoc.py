@@ -58,7 +58,7 @@ class AoCApp(App):
 
     async def on_button_pressed(self, event: Button.Pressed) -> None:
         if event.button.id == "run":
-            widget.run(file, args.part)
+            widget.run(file, args.part, args.test)
 
 if __name__ == "__main__":
     try:
